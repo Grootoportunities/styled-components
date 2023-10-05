@@ -1,28 +1,48 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { MyAnimation } from "../styles/animations/Animations";
 
-export const StyledBtn = styled.button`
+type StyledBtnProptType = {
+  color?: string;
+  fontSize?: string;
+  btnType: "primary" | "outlined";
+  active?: boolean;
+};
+
+export const StyledBtn = styled.button<StyledBtnProptType>`
   border: none;
-  background-color: #fb3f78;
+  border-radius: 10px;
   padding: 10px 20px;
-  color: snow;
-  font-size: 2rem;
+  font-size: ${(props) => props.fontSize || "2rem"};
   font-weight: bold;
 
-  &:hover {
-    background-color: #e22a2a;
-  }
+  ${(props) =>
+    props.btnType === "outlined" &&
+    css<StyledBtnProptType>`
+      border: 2px solid ${(props) => props.color || "#fb3f78"};
+      color: ${(props) => props.color || "#fb3f78"};
+      background-color: transparent;
 
-  &:last-child {
-    background-color: #26e5e5;
-  }
-`;
+      &:hover {
+        border-color: #2a13a9;
+        color: #2a13a9;
+        background-color: transparent;
+      }
+    `}
 
-export const SuperButton = styled(StyledBtn)`
-  border-radius: 5px;
-  background-color: #4161f0;
-  color: #292929;
-  &:hover {
-    animation: ${MyAnimation} 2s ease-in-out infinite;
-  }
+  ${(props) =>
+    props.btnType === "primary" &&
+    css<StyledBtnProptType>`
+      background-color: ${(props) => props.color || "#fb3f78"};
+      color: snow;
+
+      &:hover {
+        background-color: #e22a2a;
+      }
+    `}
+
+    ${(props) =>
+    props.active &&
+    css<StyledBtnProptType>`
+      box-shadow: 5px 5px 5px 5px #00000054;
+    `}
 `;
